@@ -12,14 +12,19 @@ func short_url(writter http.ResponseWriter, request *http.Request) {
 	if request.Method == "GET" {
 		LongURL := request.URL.Query().Get("URL")
 		URLs := &model.URL{LongURL: LongURL}
+
 		err := service.GenerateShortURL(URLs)
 		if err != nil {
 			return
 		}
-		URLs.ShortURL = "http://" + request.Host + "/" + URLs.ShortURL
-		writter.Header().Set("Content-Type", "value")
+
+		data, err := model.ConvertToJson(URLs)
+		if err != nil {
+			return
+		}
+		writter.Header().Set("Content-Type", "application/json")
 		writter.WriteHeader(http.StatusOK)
-		writter.Write([]byte(URLs.ShortURL))
+		writter.Write(data)
 	} else {
 		writter.WriteHeader(http.StatusMethodNotAllowed)
 	}
@@ -34,14 +39,6 @@ func reddirect(writter http.ResponseWriter, request *http.Request) {
 	LongURL := "http://" + res
 	http.Redirect(writter, request, LongURL, http.StatusTemporaryRedirect)
 }
-
-const (
-	host     = "localhost"
-	port     = 8080
-	user     = "postgres"
-	password = "3525"
-	dbname   = "pos"
-)
 
 func main() {
 	http.HandleFunc("/", reddirect)

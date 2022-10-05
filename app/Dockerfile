@@ -1,7 +1,11 @@
 FROM golang:1.18.4-alpine
 
-COPY ../UrlShortner UrlShortner
+RUN mkdir /build
+ADD . /build
+WORKDIR /build
 
-CMD ["make run"]
+RUN go build -o main cmd/main.go
 
-CMD ["cmd/./main"]
+EXPOSE 8080
+
+CMD ["/build/main"]

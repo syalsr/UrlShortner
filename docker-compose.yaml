@@ -1,4 +1,4 @@
-version: "3"
+version: "3.8"
 
 services:
   app:
@@ -9,8 +9,16 @@ services:
       - database
 
   database:
-    build: database
+    image: redis:alpine3.16
+    hostname: redis
+    command: redis-server
+    restart: always
     ports:
       - "6379:6379"
     volumes:
-      - .data:/data
+      - redis-data:/data
+      - redis-conf:/usr/local/etc/redis/redis.conf
+
+volumes:
+  redis-data:
+  redis-conf:

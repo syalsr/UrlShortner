@@ -1,8 +1,8 @@
 package main
 
 import (
-	"Ozon_Fintech/app/model"
-	"Ozon_Fintech/app/service"
+	"UrlShortner/model"
+	"UrlShortner/service"
 	"fmt"
 	"log"
 	"net/http"

@@ -1,8 +1,8 @@
 package service
 
 import (
-	"Ozon_Fintech/app/database"
-	"Ozon_Fintech/app/model"
+	"UrlShortner/database"
+	"UrlShortner/model"
 	"math/rand"
 )
 
@@ -13,6 +13,7 @@ func GenerateShortURL(URLs *model.URL) error {
 		result[i] = letters[rand.Intn(len(letters))]
 	}
 	URLs.ShortURL = string(result)
+
 	err := database.SetURLs(URLs)
 	if err != nil {
 		return err

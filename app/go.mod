@@ -1,4 +1,4 @@
-module Ozon_Fintech
+module UrlShortner
 
 go 1.18
 
